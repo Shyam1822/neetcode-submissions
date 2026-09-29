@@ -1,0 +1,28 @@
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        # 29/9/26
+
+        op = 0
+        row = len(grid)
+        col = len(grid[0])
+
+        def searchMax(r, c):
+            if r < 0 or c < 0 or r == row or c == col or grid[r][c] != 1:
+                return 0
+
+            grid[r][c] = "#"  # mark visited
+
+            return (
+                1
+                + searchMax(r + 1, c)
+                + searchMax(r - 1, c)
+                + searchMax(r, c + 1)
+                + searchMax(r, c - 1)
+            )
+
+        for i in range(row):
+            for j in range(col):
+                if grid[i][j] == 1:
+                    op = max(op,searchMax(i,j))
+
+        return op
